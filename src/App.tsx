@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Filters, IFiltersValue } from './components/filters/Filters';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  public filtersValue: IFiltersValue = {
+    employeeDepartment: 'Accounting and Finance',
+    employeeStatus: 'active'
+  }
+
+  public componentDidMount() {
+    setTimeout(() => {
+      this.filtersValue = {...this.filtersValue, employeeStatus: 'not active'}
+      console.log(this.filtersValue)
+    }, 5000)
+  }
+
+  render() {
+      return (
+      <div className="App">
+        <header className="app-header">
+        </header>
+        <section className="filters">
+          <Filters initialFiltersValue={this.filtersValue} />
+        </section>
+        <section className="employees-list"></section>
+      </div>
+    );
+  }
 }
 
 export default App;
