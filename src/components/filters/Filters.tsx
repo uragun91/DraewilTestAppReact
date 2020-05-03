@@ -35,12 +35,6 @@ export class Filters extends React.Component<IProps, IState> {
     [employeeDepartmentKey]: ['any', 'IT', 'HR', 'Sales', 'Marketing', 'Accounting and Finance']
   }
 
-  public componentDidUpdate(prevProps: IProps) {
-    if (Object.values(prevProps.initialFiltersValue).toString() !== Object.values(this.props.initialFiltersValue).toString()) {
-      this.setState({filtersValue: this.props.initialFiltersValue})
-    }
-  }
-
   public onFilterChanged(filterGroup: keyof IFiltersValue) {
     return (value: FilterValue): void => {
       const newFiltersValue: IFiltersValue = { ...this.state.filtersValue, [filterGroup]: value };

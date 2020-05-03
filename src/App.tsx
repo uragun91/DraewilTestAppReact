@@ -15,19 +15,6 @@ class App extends React.Component {
     }
   }
 
-  public componentDidMount() {
-    setTimeout(() => {
-      this.setState((state: IState) => {
-        return {
-          filtersValue: {
-            ...state.filtersValue,
-            employeeStatus: 'not active'
-          }
-        }
-      })
-    }, 3000)
-  }
-
   render() {
       return (
       <div className="App">
