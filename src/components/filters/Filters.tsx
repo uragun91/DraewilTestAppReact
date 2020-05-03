@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { FiltersGroup } from '../filters-group/FiltersGroup';
 
-export type FilterValue = IFiltersValue['employeeDepartment'] | IFiltersValue['employeeStatus']
-
-export interface IFiltersValue {
-  employeeStatus:  'any' | 'active' | 'not active',
-  employeeDepartment: 'any' | 'IT' | 'HR' | 'Sales' | 'Marketing' | 'Accounting and Finance'
-}
-
 interface IProps {
   filterValueChanged: (filtersValue: IFiltersValue) => void;
   initialFiltersValue: IFiltersValue
