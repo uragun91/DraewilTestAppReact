@@ -42,14 +42,16 @@ export class Filters extends React.Component<IProps, IState> {
       <div>
 
         <FiltersGroup
-          title={employeeStatusKey}
-          filtersList={this.possibleFiltersValues[employeeStatusKey]}
-          filterChanged={this.onFilterChanged('employeeStatus')}
+          title={ employeeStatusKey }
+          filtersList={ this.possibleFiltersValues[employeeStatusKey] }
+          initialFilterValue={ this.state.filtersValue.employeeStatus }
+          filterChanged={ this.onFilterChanged('employeeStatus') }
         />
         <FiltersGroup
-          title={employeeDepartmentKey}
-          filtersList={this.possibleFiltersValues[employeeDepartmentKey]}
-          filterChanged={this.onFilterChanged('employeeDepartment')}
+          title={ employeeDepartmentKey }
+          filtersList={ this.possibleFiltersValues[employeeDepartmentKey] }
+          initialFilterValue={ this.state.filtersValue.employeeDepartment }
+          filterChanged={ this.onFilterChanged('employeeDepartment') }
         />
 
         <pre>
