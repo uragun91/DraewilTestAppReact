@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { FiltersGroup } from '../filters-group/FiltersGroup';
+
+export type FilterValue = IFiltersValue['employeeDepartment'] | IFiltersValue['employeeStatus']
 
 export interface IFiltersValue {
   employeeStatus:  'any' | 'active' | 'not active',
@@ -14,6 +17,9 @@ interface IState {
   filtersValue: IFiltersValue;
 }
 
+const employeeStatusKey: string = 'Employee Status'
+const employeeDepartmentKey: string = 'Employee Department'
+
 export class Filters extends React.Component<IProps, IState> {
   public static defaultProps: Partial<IProps> = {
     filterValueChanged: () => {},
@@ -24,24 +30,45 @@ export class Filters extends React.Component<IProps, IState> {
     filtersValue: this.props.initialFiltersValue,
   };
 
-  public componentDidUpdate() {
-    console.log('props received') // <--- this one doesn't fire when the value of initialFiltersValue in App.tsx updated
+  public possibleFiltersValues: {[key: string]: FilterValue[] } = {
+    [employeeStatusKey]: ['any', 'not active', 'active'],
+    [employeeDepartmentKey]: ['any', 'IT', 'HR', 'Sales', 'Marketing', 'Accounting and Finance']
   }
 
-  public onFilterValueClick(filter: 'employeeStatus' | 'employeeDepartment', value: IFiltersValue['employeeDepartment'] & IFiltersValue['employeeStatus']) {
-    const newFiltersValue: IFiltersValue = { ...this.state.filtersValue, [filter]: value };
+  public componentDidUpdate(prevProps: IProps) {
+    if (Object.values(prevProps.initialFiltersValue).toString() !== Object.values(this.props.initialFiltersValue).toString()) {
+      this.setState({filtersValue: this.props.initialFiltersValue})
+    }
+  }
 
-    this.props.filterValueChanged(newFiltersValue);
-    this.setState({ filtersValue: newFiltersValue });
+  public onFilterChanged(filterGroup: keyof IFiltersValue) {
+    return (value: FilterValue): void => {
+      const newFiltersValue: IFiltersValue = { ...this.state.filtersValue, [filterGroup]: value };
+
+      this.props.filterValueChanged(newFiltersValue);
+      this.setState({ filtersValue: newFiltersValue });
+    }
   }
 
   public render() {
     return (
       <div>
-        <p> Filters component works </p>
+
+        <FiltersGroup
+          title={employeeStatusKey}
+          filtersList={this.possibleFiltersValues[employeeStatusKey]}
+          filterChanged={this.onFilterChanged('employeeStatus')}
+        />
+        <FiltersGroup
+          title={employeeDepartmentKey}
+          filtersList={this.possibleFiltersValues[employeeDepartmentKey]}
+          filterChanged={this.onFilterChanged('employeeDepartment')}
+        />
+
         <pre>
           { JSON.stringify(this.state, null, 2) }
         </pre>
+
       </div>
     );
   }

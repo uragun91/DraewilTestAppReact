@@ -2,18 +2,30 @@ import React from 'react';
 import './App.css';
 import { Filters, IFiltersValue } from './components/filters/Filters';
 
+interface IState {
+  filtersValue: IFiltersValue
+}
+
 class App extends React.Component {
 
-  public filtersValue: IFiltersValue = {
-    employeeDepartment: 'Accounting and Finance',
-    employeeStatus: 'active'
+  public state: IState = {
+    filtersValue: {
+      employeeDepartment: 'Accounting and Finance',
+      employeeStatus: 'active'
+    }
   }
 
   public componentDidMount() {
     setTimeout(() => {
-      this.filtersValue = {...this.filtersValue, employeeStatus: 'not active'}
-      console.log(this.filtersValue)
-    }, 5000)
+      this.setState((state: IState) => {
+        return {
+          filtersValue: {
+            ...state.filtersValue,
+            employeeStatus: 'not active'
+          }
+        }
+      })
+    }, 3000)
   }
 
   render() {
@@ -21,10 +33,12 @@ class App extends React.Component {
       <div className="App">
         <header className="app-header">
         </header>
-        <section className="filters">
-          <Filters initialFiltersValue={this.filtersValue} />
-        </section>
-        <section className="employees-list"></section>
+        <div className="app-content">
+          <section className="filters">
+            <Filters initialFiltersValue={this.state.filtersValue} />
+          </section>
+          <section className="employees-list"></section>
+        </div>
       </div>
     );
   }
