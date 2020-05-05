@@ -1,13 +1,14 @@
 import * as React from 'react';
+import './Filters.css'
 import { FiltersGroup } from '../filters-group/FiltersGroup';
 
 interface IProps {
-  filterValueChanged: (filtersValue: IFiltersValue) => void;
-  initialFiltersValue: IFiltersValue
+  filterValueChanged: (filtersValue: IFilters) => void;
+  initialFiltersValue: IFilters
 }
 
 interface IState {
-  filtersValue: IFiltersValue;
+  filtersValue: IFilters;
 }
 
 const employeeStatusKey: string = 'Employee Status'
@@ -28,9 +29,9 @@ export class Filters extends React.Component<IProps, IState> {
     [employeeDepartmentKey]: ['any', 'IT', 'HR', 'Sales', 'Marketing', 'Accounting and Finance']
   }
 
-  public onFilterChanged(filterGroup: keyof IFiltersValue) {
+  public onFilterChanged(filterGroup: keyof IFilters) {
     return (value: FilterValue): void => {
-      const newFiltersValue: IFiltersValue = { ...this.state.filtersValue, [filterGroup]: value };
+      const newFiltersValue: IFilters = { ...this.state.filtersValue, [filterGroup]: value };
 
       this.props.filterValueChanged(newFiltersValue);
       this.setState({ filtersValue: newFiltersValue });
@@ -39,7 +40,7 @@ export class Filters extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <div>
+      <div className="filters-wrapper">
 
         <FiltersGroup
           title={ employeeStatusKey }

@@ -5,7 +5,7 @@ type ActiveStatus = 'active' | 'not active'
 
 type Gender = 'male' | 'female'
 
-interface IFiltersValue {
+interface IFilters {
   employeeStatus:  'any' | ActiveStatus,
   employeeDepartment: 'any' | Department
 }

@@ -2,28 +2,40 @@ import React from 'react';
 import './App.css';
 import { Filters } from './components/filters/Filters';
 import { Employee } from './dto/Employee';
+import apiService from './services/api';
 
 interface IState {
-  filtersValue: IFiltersValue,
+  filters: IFilters,
   employees: Employee[]
 }
 
 class App extends React.Component {
 
   public state: IState = {
-    filtersValue: {
+    filters: {
       employeeDepartment: 'Accounting and Finance',
       employeeStatus: 'active'
     },
     employees: []
   }
 
-  public onFiltersChanged = (newFilterValue: IFiltersValue) => {
-    // load users
+  public componentDidMount() {
+    this.getEmployees(this.state.filters)
+  }
 
-    // this.setState(() => {
-    //   return { filtersValue: newFilterValue }
-    // })
+  public onFiltersChanged = (newFilters: IFilters) => {
+
+    this.setState((): Partial<IState> => {
+      return { filters: newFilters }
+    })
+    this.getEmployees(newFilters)
+  }
+
+  private getEmployees(filters: IFilters): void {
+    apiService.getEmployees(filters)
+      .then((employees: Employee[]) => {
+        this.setState({ employees })
+      })
   }
 
   render() {
@@ -33,9 +45,11 @@ class App extends React.Component {
         </header>
         <div className="app-content">
           <section className="filters">
-            <Filters initialFiltersValue={this.state.filtersValue} filterValueChanged={this.onFiltersChanged} />
+            <Filters initialFiltersValue={ this.state.filters } filterValueChanged={ this.onFiltersChanged } />
           </section>
-          <section className="employees-list"></section>
+          <section className="employees-list">
+
+          </section>
         </div>
       </div>
     );
