@@ -13,4 +13,17 @@ export class Employee {
   public get activeStatus(): ActiveStatus {
     return this.isActive ? 'active' : 'not active'
   }
+
+  public static build(data: any = {}): Employee {
+
+
+    return new Employee(
+      data._id || '',
+      EmployeeName.build(data.name),
+      data.age || 0,
+      data.gender,
+      !!data.isActive,
+      data.department
+    )
+  }
 }
