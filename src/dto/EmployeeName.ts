@@ -1,7 +1,7 @@
 export class EmployeeName {
   constructor(
     public firstName: string = '',
-    public lasteName: string = ''
+    public lastName: string = ''
   ) { }
 
   public static build(data: any = {}): EmployeeName {

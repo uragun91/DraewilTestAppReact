@@ -3,6 +3,7 @@ import './App.css';
 import { Filters } from './components/filters/Filters';
 import { Employee } from './dto/Employee';
 import apiService from './services/api';
+import { EmployeeCard } from './components/employee-card/EmployeeCard';
 
 interface IState {
   filters: IFilters,
@@ -39,6 +40,12 @@ class App extends React.Component {
   }
 
   render() {
+    const employeesList = this.state.employees.map((employee: Employee) => {
+      return (
+        <EmployeeCard employee={employee} key={employee._id} />
+      )
+    })
+
     return (
       <div className="App">
         <header className="app-header">
@@ -48,7 +55,7 @@ class App extends React.Component {
             <Filters initialFiltersValue={ this.state.filters } filterValueChanged={ this.onFiltersChanged } />
           </section>
           <section className="employees-list">
-
+            {employeesList}
           </section>
         </div>
       </div>
